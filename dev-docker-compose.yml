@@ -1,39 +1,54 @@
 version: "3"
 
-## TODO add auth to mongo
-## TODO work out production architecture (add nginx proxy)
-## TODO work out testing?
-
 services:
   ##########################
   ### SETUP SERVER CONTAINER
   ##########################
   server:
-    build: ./server
+    # Tell docker what file to build the server from
+    build:
+      context: ./server
+      dockerfile: Dockerfile-dev
+    # The ports to expose
+    expose:
+      - 4000
+    # Environment variables
     environment:
-      - MONGO_URI=${MONGO_URI}
-      - PORT=${PORT}
+      - MONGO_URI=mongodb://db:27017/db
+      - PORT=4000
+      - JWT_SECRET=secretsecret
+      - JWT_EXPIRY=30d
+      - DEBUG=worker:*
+      - MORGAN=combined
       - NODE_ENV=development
+    # Port mapping
     ports:
-      - ${PORT}:${PORT}
+      - 4000:4000
+    # Volumes to mount
     volumes:
-      # Map client src to server src to hot reload
       - ./server/src:/app/server/src
+    # Run command
+    # Nodemon for hot reloading (-L flag required for polling in Docker)
     command: nodemon -L src/server.js
+    # Connect to other containers
     links:
       - db
+    # Restart action
     restart: always
   ##########################
   ### SETUP CLIENT CONTAINER
   ##########################
   client:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile-dev
     environment:
-      - REACT_APP_PORT=${REACT_APP_PORT}
-      - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING}
-
+      - REACT_APP_PORT=3000
+      - CHOKIDAR_USEPOLLING=true
+    expose:
+      - 3000
     ports:
-      - ${REACT_APP_PORT}:${REACT_APP_PORT}
+      - 3000:3000
     volumes:
       - ./client/src:/app/client/src
       - ./client/public:/app/client/public
@@ -47,5 +62,5 @@ services:
   db:
     image: mongo
     ports:
-      - ${MONGO_PORT}:${MONGO_PORT}
+      - 27017:27017
     restart: always

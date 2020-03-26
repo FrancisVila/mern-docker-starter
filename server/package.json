@@ -29,8 +29,8 @@
   "homepage": "https://github.com/joshdcuneo/board#readme",
   "dependencies": {
     "concurrently": "^3.6.1",
-    "express": "^4.16.3",
-    "mongoose": "^5.2.7"
+    "express": "^4.17.1",
+    "mongoose": "^5.9.6"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"

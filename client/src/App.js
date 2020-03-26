@@ -18,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>"Hello server!" says the client</h1>
+        <h1>"Hello server SSSS !" says the client</h1>
         <h1>"{this.state.welcome}" says the server</h1>
       </div>
     );
