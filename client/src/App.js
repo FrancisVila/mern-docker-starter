@@ -19,9 +19,9 @@ class App extends Component {
       console.log("componentDidMount res2=" +res2);
 
       this.setState({ userList:   res2.data.users});
-/*      console.log("componentDidMount res2.data[0]=" +res2.data.users[0]);
+     console.log("componentDidMount res2.data[0]=" +res2.data.users[0]);
       console.log("componentDidMount res2=" +res2);
-      */
+      
     } catch (error) { 
 
       console.log(error);
@@ -34,7 +34,7 @@ class App extends Component {
 
   render() {
     function LiList (props) {
-      return props.data.map(item =>  <li key={item.name}> {item.name} </li>)
+      return props.data.map(item =>        <li key={item.name}> {item.name}       </li>)
     }
     return (
       <div className="App">

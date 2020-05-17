@@ -55,9 +55,9 @@ app.get("/welcome", async (req, res) => {
 var users;
 
 app.get("/user", async (req, res) => {
-  console.log("Client request received");
- // const users = await User.find().exec();
-  users =[{name:'tyui'},{name:'tototyu'},{name:'reaesd'}]
+  console.log("inside get user");
+ const users = await User.find().exec();
+ // users =[{name:'tyui'},{name:'tototyu'},{name:'reaesd'}]
   console.log(users[0].name);
   res.send(
     {users}
@@ -65,8 +65,11 @@ app.get("/user", async (req, res) => {
 })
 
 app.post("/user", (req, res) => {
-  var myData = new User(req.body);
-  myData.save()
+  console.log("inside set user");
+  console.log("res=", res);
+  
+  const user = new User( { name: "vvvvvvvvvvvv" } );
+  user.save()
   .then(item => {
   /* res.send("item saved to database") ; */ 
   })
@@ -85,10 +88,11 @@ const userSchema = new Schema(
   }
 );
 const User = mongoose.model("User", userSchema);
+/*
 const user = new User({ name: "Big Bill Brown" });
 user
   .save()
   .then(user => console.log(`${user.name} saved to the database`))
   .catch(err => console.log(err));
-
+*/
 app.listen(port, () => console.log(`Listening on port ${port}`));
