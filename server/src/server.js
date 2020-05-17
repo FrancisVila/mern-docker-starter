@@ -39,14 +39,41 @@ db.once("open", () => console.log("Successfully connected to mongo"));
 
 // Setup routes to respond to client
 app.get("/welcome", async (req, res) => {
+  try {
   console.log("Client request received");
   const user = await User.find().exec();
   console.log(user[0].name);
   res.send(
-    `Hello Client! There is one record in the database for ${user[0].name}`
+    `Hello Client! There is one record in the database for ${user[0].name} `
   );
+  } catch (error) {
+    res.send("error: " + error.message)
+    
+  }
 });
 
+var users;
+
+app.get("/user", async (req, res) => {
+  console.log("Client request received");
+ // const users = await User.find().exec();
+  users =[{name:'tyui'},{name:'tototyu'},{name:'reaesd'}]
+  console.log(users[0].name);
+  res.send(
+    {users}
+  );
+})
+
+app.post("/user", (req, res) => {
+  var myData = new User(req.body);
+  myData.save()
+  .then(item => {
+  /* res.send("item saved to database") ; */ 
+  })
+  .catch(err => {
+  res.status(400).send("unable to save to database");
+  });
+ });
 // Setup a record in the database to retrieve
 const { Schema } = mongoose;
 const userSchema = new Schema(

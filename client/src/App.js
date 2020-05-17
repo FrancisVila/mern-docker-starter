@@ -14,12 +14,12 @@ class App extends Component {
       const res = await axios.get("/welcome");
       console.log("componentDidMount res=" + res);
       this.setState({ welcome: res.data });
-      /*
-      const res2 = await axios.get("/toto");
+      
+      const res2 = await axios.get("/user");
       console.log("componentDidMount res2=" +res2);
-      this.setState({ welcome:   res.data});
+
       this.setState({ userList:   res2.data.users});
-      console.log("componentDidMount res2.data[0]=" +res2.data.users[0]);
+/*      console.log("componentDidMount res2.data[0]=" +res2.data.users[0]);
       console.log("componentDidMount res2=" +res2);
       */
     } catch (error) { 
@@ -38,7 +38,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-      <form method="post" action="/toto">
+      <form method="post" action="/user">
       <label>Enter User Name ss </label><br/>
       <input type="text" name="name" placeholder="Enter user name..." required />
       <input type="submit" value="Add Name" />
