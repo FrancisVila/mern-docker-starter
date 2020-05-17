@@ -13,6 +13,7 @@ class App extends Component {
     try {
       const res = await axios.get("/welcome");
       console.log("componentDidMount res=" + res);
+      this.setState({ welcome: res.data });
       /*
       const res2 = await axios.get("/toto");
       console.log("componentDidMount res2=" +res2);
